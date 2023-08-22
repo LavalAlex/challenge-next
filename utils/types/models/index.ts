@@ -1,0 +1,9 @@
+export type { default as ActionTicket } from "./ActionTicketModel";
+export type { default as AlertModel } from "./AlertModel";
+export type { default as AuthModel } from "./AuthModel";
+export type { default as CommentModel } from "./CommentModel";
+export type { default as ImageModel } from "./ImageModel";
+export type { default as SupportModel } from "./SupportModel";
+export type { default as TicketModel } from "./TicketModel";
+export type { default as UserModel } from "./UserModel";
+export type { default as PhotoModel } from "./PhotoModel";
