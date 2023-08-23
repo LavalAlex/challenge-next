@@ -72,7 +72,6 @@ function HomeUser() {
         paginate={paginate}
         filters
       />
-      {/* Renderizar las imágenes */}
       <div className="gallery">
         {imagesToDisplay?.map(({ img_src }, index) => (
           <InstagramCard key={index} imageUrl={img_src} likes={0} />

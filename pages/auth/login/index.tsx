@@ -35,7 +35,8 @@ function LoginPage({ meta }: Props) {
   const _onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const res = await dispatch(login(_inputs), [loadingAuth()]);
+    const res = await dispatch(login(_inputs));
+    console.log(res)
     if (!res?.payload)
       return create({ type: "error", message: "Error al iniciar sesion." });
     return router.push(`/home`);
@@ -96,11 +97,11 @@ function LoginPage({ meta }: Props) {
               Iniciar sesion
             </PrimaryButton>
           </LoginForm>
-          <div className="bottom">
+          {/* <div className="bottom">
             <Link href="/auth/recovery">Recuperar cuenta</Link>
             <span className="divider">O</span>
             <Link href="/auth/enable">Habilitar cuenta</Link>
-          </div>
+          </div> */}
         </div>
       </LoginContainer>
     </Layout>
@@ -113,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (isAuthenticated(ctx)) return ssrRedirects.home;
 
   const props: Props = {
-    data: null,
+    email: null,
     meta: {
       title: `Iniciar sesión | ${APP_NAME}`,
       description: `Inicia sesion con tu cuenta y accede a nuestra pagina de tickets`,

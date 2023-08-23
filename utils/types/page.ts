@@ -1,6 +1,6 @@
 import { MetadataProps } from "./metadata";
 
 export interface Page<T = null> {
-  data: T;
+  email: T;
   meta: MetadataProps;
 }
