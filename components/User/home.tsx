@@ -1,48 +1,37 @@
 import { useCallback, useEffect, useState } from "react";
-import { BiListUl, BiPlus } from "react-icons/bi";
-import { useRouter } from "next/router";
+import {  useUser } from "@/hook";
 
-import { useAuth, useUser } from "@/hook";
-import { OnEvent, Event } from "@/utils/types/events";
-import { ActionTicket, TicketModel } from "@/utils/types/models";
 
-import { HomeUserContainer } from "./styles";
 import usePaginate from "@/hook/usePaginate";
-import { TicketsQuery } from "@/utils/types/models/TicketModel";
-import { UserService } from "@/services/api/user";
+
+
 import InstagramCard from "../Image/Image";
 import { getPhotos } from "@/actions/user";
+import Filters from "../Filters";
+import IPhotoModel, { PhotosQuery } from "@/utils/types/models/PhotoModel";
 
-type TQuery = {
-  [prop in keyof TicketsQuery]: TicketsQuery[prop] | null;
-};
-
-const imagesPerPage = 25;
 
 function HomeUser() {
-  const { store: auth } = useAuth();
   const {
     store: { photos },
     dispatch,
   } = useUser();
 
-  const [query, setQuery] = useState<TQuery>({
-    orderBy: null,
-    priority: null,
-    category: null,
+  const [query, setQuery] = useState<PhotosQuery>({
+    // orderBy: null,
+    camera: "MAST",
+    rover: "curiosity",
   });
   const [_section, _setSection] = useState<number | null>(null);
-  const [_details, _setDetails] = useState<TicketModel | null>(null);
+  const [_details, _setDetails] = useState<IPhotoModel | null>(null);
 
   const fetchPhotos = useCallback(async () => {
-    return await dispatch(getPhotos());
-  }, [dispatch]);
+    return await dispatch(getPhotos(query));
+  }, [dispatch, query]);
 
   useEffect(() => {
     fetchPhotos();
   }, [fetchPhotos]);
-
-  console.log("home===>", photos);
 
   const [likes, setLikes] = useState(0);
 
@@ -50,45 +39,46 @@ function HomeUser() {
     setLikes(likes + 1);
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const paginate = usePaginate(0, photos?.length);
 
-  // Calcular el índice de inicio y fin para las imágenes en la página actual
-  const startIndex = (currentPage - 1) * imagesPerPage;
-  const endIndex = startIndex + imagesPerPage;
+  const imagesToDisplay = photos?.slice(paginate.from, paginate.to);
 
-  // Filtrar las imágenes que se mostrarán en la página actual
-  const imagesToDisplay = photos.slice(startIndex, endIndex);
+  const _showDetails = (ticket: IPhotoModel) => {
+    _setDetails(ticket);
+    _setSection(3);
+  };
 
-  // Función para cambiar de página
-  const goToPage = (page: number) => {
-    setCurrentPage(page);
+  const _onQuery = (key: string, value: any) => {
+    if (key === "camera") {
+      setQuery((old) => ({
+        ...old,
+        camera: value || null,
+      }));
+    }
+    if (key === "rover") {
+      setQuery((old) => ({
+        ...old,
+        rover: value || null,
+      }));
+    }
   };
 
   return (
     <div>
+      <Filters
+        data={photos || []}
+        onClick={_showDetails}
+        onQuery={_onQuery}
+        paginate={paginate}
+        filters
+      />
       {/* Renderizar las imágenes */}
       <div className="gallery">
-        {imagesToDisplay.map(({ img_src }, index) => (
+        {imagesToDisplay?.map(({ img_src }, index) => (
           <InstagramCard key={index} imageUrl={img_src} likes={0} />
         ))}
       </div>
 
-      {/* Renderizar los botones de paginación */}
-      <div className="pagination">
-        {Array.from({
-          length: Math.ceil(photos.length / imagesPerPage),
-        }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToPage(index + 1)}
-            className={currentPage === index + 1 ? "active" : ""}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
-
-      {/* Estilos CSS */}
       <style jsx>{`
         .gallery {
           display: flex;

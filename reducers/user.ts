@@ -5,7 +5,7 @@ const userReducer: UserReducer = (store, action) => {
   if (action.type === USER_ACTIONS.GET_PHOTOS) {
     return {
       ...store,
-      photos: action.payload.photos,
+      photos: action.payload,
     };
   }
 

@@ -1,11 +1,11 @@
-interface ICamare{
-id: number;
+interface ICamare {
+  id: number;
   name: string;
-rover_id: number;
-full_name: string
+  rover_id: number;
+  full_name: string;
 }
 
-interface IRover{
+interface IRover {
   id: number;
   name: string;
   landing_date: Date;
@@ -24,6 +24,24 @@ interface IPhotoModel {
   img_src: string;
   earth_date: Date;
   rover: IRover;
+}
+
+export type CameraName =
+  | "FHAZ"
+  | "RHAZ"
+  | "MAST"
+  | "CHEMCAM"
+  | "MAHLI"
+  | "MARDI"
+  | "NAVCAM"
+  | "PANCAM"
+  | "MINITES";
+
+export type Rover = "curiosity" | "opportunity" | "spirit";
+
+export interface PhotosQuery {
+  rover?: string | null;
+  camera?: string | null;
 }
 
 export default IPhotoModel;

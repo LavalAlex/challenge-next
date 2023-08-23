@@ -14,7 +14,7 @@ export interface Pagination {
   total: number;
 }
 
-export const PER_PAGE = 10;
+export const PER_PAGE = 25;
 function usePaginate(
   page: number,
   total: number,

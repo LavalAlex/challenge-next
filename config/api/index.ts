@@ -18,4 +18,4 @@ export const API_SUPPORT_GET_ACTION_TICKETS = "/support/action";
 
 // export const API_NASA_GET_PHOTOS = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=mn0cL646A86fzVD3vI3MdMpphxncHeUDjNCzgPja"
 export const API_NASA_GET_PHOTOS =
-  "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=mn0cL646A86fzVD3vI3MdMpphxncHeUDjNCzgPja";
+  "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=mn0cL646A86fzVD3vI3MdMpphxncHeUDjNCzgPja";

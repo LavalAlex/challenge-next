@@ -1,6 +1,7 @@
 import { API_NASA_GET_PHOTOS } from "@/config";
 import { Api } from "@/utils/axios";
 import { PhotoModel } from "@/utils/types/models";
+import { PhotosQuery } from "@/utils/types/models/PhotoModel";
 
 export enum USER_ACTIONS {
   GET_PHOTOS = "GET_PHOTOS",
@@ -8,12 +9,15 @@ export enum USER_ACTIONS {
   ERROR = "ERROR",
 }
 
-export async function getPhotos() {
+export async function getPhotos({ camera, rover }: PhotosQuery) {
   try {
-    const { data } = await Api.get<{ photos: PhotoModel[] }>(
-      API_NASA_GET_PHOTOS
+    const {
+      data: { photos },
+    } = await Api.get<{ photos: PhotoModel[] }>(
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&camera=${camera}&api_key=mn0cL646A86fzVD3vI3MdMpphxncHeUDjNCzgPja`
     );
-    return { type: USER_ACTIONS.GET_PHOTOS, payload: data };
+
+    return { type: USER_ACTIONS.GET_PHOTOS, payload: photos };
   } catch (e: any) {
     console.debug(e.reponse);
     return { type: USER_ACTIONS.ERROR, payload: [] };

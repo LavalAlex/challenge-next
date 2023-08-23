@@ -3,7 +3,16 @@ import ImageModel from "./ImageModel";
 import UserModel from "./UserModel";
 
 export type TicketStatus = "opened" | "solved" | "cloused" | "cancelled";
-export type Priority = "low" | "high" | "medium";
+export type Priority =
+  | "FHAZ"
+  | "RHAZ"
+  | "MAST"
+  | "CHEMCAM"
+  | "MAHLI"
+  | "MARDI"
+  | "NAVCAM"
+  | "PANCAM"
+  | "CMINITESMINITES";
 export type TicketCategories = "developer" | "support" | "order";
 
 type TUser = Omit<UserModel, "id" | "isActive">;
