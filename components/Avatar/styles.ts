@@ -4,7 +4,7 @@ interface Props {
   isClickable?: boolean;
 }
 export const AvatarContainer = styled.div<Props>`
-  color: #fff;
+  color: #000;
   cursor: deafult;
 
   .user {

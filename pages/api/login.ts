@@ -39,7 +39,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       // Cierra la conexión cuando hayas terminado
       await connection.end();
 
-      res.status(200).json({ user });
+      res.status(200).json({ msg: "The account is enabled!", email });
     } catch (error) {
       res.status(500).json({ error: "Error en el servidor" });
     }

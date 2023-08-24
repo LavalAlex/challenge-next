@@ -18,8 +18,8 @@ function Avatar({ data, onClick }: AvatarProps) {
       onClick={_onClick}
     >
       <div className="user">
-        <p className="name">{name}</p>
         <p className="email">{data.email}</p>
+        <p className="name"> LogOut</p>
       </div>
     </AvatarContainer>
   );

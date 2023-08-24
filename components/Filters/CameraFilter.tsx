@@ -5,8 +5,9 @@ import { Priority as TPriority } from "@/utils/types/models/TicketModel";
 import { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import { styled } from "styled-components";
+import { Container } from "./styles";
 
-const cameras: CameraName[] = [
+const curiosity: CameraName[] = [
   "FHAZ",
   "RHAZ",
   "MAST",
@@ -14,15 +15,16 @@ const cameras: CameraName[] = [
   "MAHLI",
   "MARDI",
   "NAVCAM",
-  "PANCAM",
-  "MINITES",
 ];
+
+const both: CameraName[] = ["FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"];
 
 interface Props {
   onQuery?: (key: string, value: string | null) => any;
+  rover?: string | null;
 }
 
-function CameraFilter({ onQuery }: Props) {
+function CameraFilter({ onQuery, rover }: Props) {
   const { state, hide, toggle } = useShow({});
   const [current, setCurrent] = useState<number | null>(null);
 
@@ -38,28 +40,33 @@ function CameraFilter({ onQuery }: Props) {
       </button>
       {state && (
         <div className="options">
-          {cameras.map((p, i) => (
-            // eslint-disable-next-line react/jsx-key
-            <button
-              disabled={current === i}
-              className={current === i ? "active" : ""}
-              onClick={() => {
-                setCurrent(i);
-                _onQuery(p);
-              }}
-            >
-              {p}
-            </button>
-          ))}
-
-          <button
-            className={current === null ? "active" : ""}
-            onClick={() => {
-              _onQuery?.(null);
-            }}
-          >
-            {"all"}
-          </button>
+          {rover == "curiosity"
+            ? curiosity.map((p, i) => (
+                // eslint-disable-next-line react/jsx-key
+                <button
+                  disabled={current === i}
+                  className={current === i ? "active" : ""}
+                  onClick={() => {
+                    setCurrent(i);
+                    _onQuery(p);
+                  }}
+                >
+                  {p}
+                </button>
+              ))
+            : both.map((p, i) => (
+                // eslint-disable-next-line react/jsx-key
+                <button
+                  disabled={current === i}
+                  className={current === i ? "active" : ""}
+                  onClick={() => {
+                    setCurrent(i);
+                    _onQuery(p);
+                  }}
+                >
+                  {p}
+                </button>
+              ))}
         </div>
       )}
     </Container>
@@ -67,49 +74,3 @@ function CameraFilter({ onQuery }: Props) {
 }
 
 export default CameraFilter;
-
-const Container = styled.div`
-  .options {
-    position: absolute;
-    z-index: 9999;
-    background: #fff;
-    box-shadow: 0 7px 14px #0003;
-    left: 0;
-    top: calc(100% + 0.5rem);
-    padding: 0.5em;
-    display: flex;
-    flex-flow: column;
-    gap: 0.5em;
-    border-radius: 5px;
-    width: 100%;
-
-    button {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1em;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5em 1em;
-      text-transform: capitalize;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-    }
-    .priority {
-      width: 100%;
-    }
-  }
-
-  button.active {
-    background: #${colors.hex.primary._500};
-    color: #fff;
-    font-weight: 600;
-  }
-
-  ::after {
-    display: none;
-  }
-`;

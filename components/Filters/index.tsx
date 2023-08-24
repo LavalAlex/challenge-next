@@ -9,12 +9,9 @@ import RoverFilter from "./RoverFilter";
 
 import CameraFilter from "./CameraFilter";
 
-import {
-  Buttons,
-  TableContainer,
-  TicketsTable,
-} from "./styles";
+import { ButtonFilter, Buttons, FilterContainer } from "./styles";
 import IPhotoModel from "@/utils/types/models/PhotoModel";
+import LikeFilter from "./LikeFilter";
 
 interface Data {
   children: ReactNode;
@@ -38,14 +35,18 @@ interface Props {
   paginate?: Pagination;
   onQuery?: (key: string, value: string | null) => any;
   filters?: boolean;
+  setSeeLike: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Filters({ data, filters, onClick, onQuery, paginate }: Props) {
-  const table_id = useId();
-
-  const _onClick = (ticket: IPhotoModel) => {
-    if (onClick) onClick(ticket);
-  };
+function Filters({
+  data,
+  filters,
+  onClick,
+  onQuery,
+  paginate,
+  setSeeLike,
+}: Props) {
+  const [rover, setRover] = useState<string | null>("curiosity");
 
   const pages = useMemo(() => {
     if (!paginate) return [];
@@ -66,69 +67,41 @@ function Filters({ data, filters, onClick, onQuery, paginate }: Props) {
     return list;
   }, [paginate]);
 
-  const [_date, _setDate] = useState(new Date());
-  const [_dateType, _setDateType] = useState<boolean>(false);
-
-  useEffect(() => {
-    _setDateType(getLocal("__prefered_date") === "text" ? true : false);
-    const interval = setInterval(() => _setDate(new Date()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-
-
   return (
-    <TableContainer>
-      {/* <div className="top">
-        <button onClick={handleDate}>
-          {_dateType ? (
-            <time dateTime={_date.toString()}>
-              {time.dd} de{" "}
-              <span className="cap">{toSpanish(time.month.full)}</span> -{" "}
-              {time.hours}:{time.minutes}
-            </time>
-          ) : (
-            <time dateTime={_date.toString()}>
-              {time.dd}/{time.mm} - {time.hours}:{time.minutes}
-            </time>
-          )}
-        </button>
-      </div> */}
-
-      {/* {paginate && (
-        <TableMetadata>
-          <p>
-            Tickets {paginate.from + 1} a{" "}
-            {paginate.to > paginate.total ? paginate.total : paginate.to}
-          </p>
-          <p>Total {paginate?.total || 0}</p>
-        </TableMetadata>
-      )} */}
-
+    <FilterContainer>
       <div className="container">
-        <TicketsTable $clickable={!!onClick}>
+        <ButtonFilter $clickable={!!onClick}>
           <thead>
             <tr>
               <THead>
                 <div className="flex">
-                  <p>Camera</p>
-                  {filters && <CameraFilter onQuery={onQuery} />}
+                  <p>Like</p>
+                  {filters && <LikeFilter setSeeLike={setSeeLike} />}
                 </div>
               </THead>
               <THead>
                 <div className="flex">
                   <p>Rover</p>
-                  {filters && <RoverFilter onQuery={onQuery} />}
+                  {filters && (
+                    <RoverFilter onQuery={onQuery} setRover={setRover} />
+                  )}
                 </div>
+              </THead>
+              <THead>
+                {rover && (
+                  <div className="flex">
+                    <p>Camera</p>
+                    {filters && (
+                      <CameraFilter onQuery={onQuery} rover={rover} />
+                    )}
+                  </div>
+                )}
               </THead>
             </tr>
           </thead>
-        </TicketsTable>
-        {!!data.length ? null : (
-          <p className="empty">Not Found Photos</p>
-        )}
+        </ButtonFilter>
       </div>
-
+      {!!data.length ? null : <p className="empty">Not Found Photos</p>}
       {paginate &&
       typeof paginate.current === "number" &&
       typeof paginate.total_pages === "number" &&
@@ -171,13 +144,8 @@ function Filters({ data, filters, onClick, onQuery, paginate }: Props) {
           )}
         </Buttons>
       ) : null}
-    </TableContainer>
+    </FilterContainer>
   );
 }
 
 export default Filters;
-
-const printDate = (str: string) => {
-  const date = timestamp(str);
-  return `${date.dd}/${date.mm}/${date.yyyy} - ${date.hours}:${date.minutes}`;
-};

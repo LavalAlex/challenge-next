@@ -1,29 +1,25 @@
 import { useShow } from "@/hook";
 import colors from "@/styles/colors";
-
-import { Rover } from "@/utils/types/models/PhotoModel";
-
+import { CameraName } from "@/utils/types/models/PhotoModel";
+import { Priority as TPriority } from "@/utils/types/models/TicketModel";
 import { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import { styled } from "styled-components";
 import { Container } from "./styles";
 
-const rover: Rover[] = ["curiosity", "opportunity", "spirit"];
+const like = ["YES", "NO"];
 
 interface Props {
-  onQuery?: (key: string, value: string | null) => any;
-  setRover: React.Dispatch<React.SetStateAction<null | string>>;
+  setSeeLike: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function RoverFilter({ onQuery, setRover }: Props) {
+function LikeFilter({ setSeeLike }: Props) {
   const { state, hide, toggle } = useShow({});
   const [current, setCurrent] = useState<number | null>(null);
 
   const _onQuery = (value: string | null) => {
-    if (onQuery) onQuery("rover", value);
-
-    setRover(value);
-
+    if (value === "YES") setSeeLike(true);
+    if (value === "NO") setSeeLike(false);
     hide();
   };
 
@@ -34,17 +30,17 @@ function RoverFilter({ onQuery, setRover }: Props) {
       </button>
       {state && (
         <div className="options">
-          {rover.map((c, i) => (
+          {like.map((p, i) => (
             // eslint-disable-next-line react/jsx-key
             <button
               disabled={current === i}
               className={current === i ? "active" : ""}
               onClick={() => {
                 setCurrent(i);
-                _onQuery(c);
+                _onQuery(p);
               }}
             >
-              {c}
+              {p}
             </button>
           ))}
         </div>
@@ -53,5 +49,4 @@ function RoverFilter({ onQuery, setRover }: Props) {
   );
 }
 
-export default RoverFilter;
-
+export default LikeFilter;

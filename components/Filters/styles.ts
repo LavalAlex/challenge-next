@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components";
 import colors from "@/styles/colors";
 
-export const TableContainer = styled.div`
+export const FilterContainer = styled.div`
   height: 100%;
   display: flex;
   flex-flow: column;
@@ -13,12 +13,15 @@ export const TableContainer = styled.div`
     justify-content: space-between;
     align-items: flex-end;
     padding: 0 1rem 0 0.5rem;
-    margin: 0 0 1rem 0;
-
+    margin: 0 1.5rem 0 auto;
     time {
       font-size: 0.9rem;
       color: #666;
     }
+  }
+
+  .container {
+    margin: 0 2rem 0 auto;
   }
 
   .empty {
@@ -41,7 +44,7 @@ export const TableMetadata = styled.div`
 interface Props {
   $clickable?: boolean;
 }
-export const TicketsTable = styled.table<Props>`
+export const ButtonFilter = styled.table<Props>`
   border-collapse: collapse;
   overflow: scroll;
 
@@ -56,6 +59,10 @@ export const TicketsTable = styled.table<Props>`
     gap: 0.5rem;
   }
 
+  .container {
+    margin: 0 0 0 auto;
+  }
+
   .priority {
     font-size: 0.75rem;
     width: 100%;
@@ -66,6 +73,7 @@ export const TicketsTable = styled.table<Props>`
   }
 
   thead {
+
     th {
       text-align: left;
       padding: 0.5em 0 !important;
@@ -195,6 +203,56 @@ export const Buttons = styled.div`
         cursor: default;
         outline: none;
       }
+    }
+  }
+`;
+
+export const Container = styled.div`
+  .options {
+    position: absolute;
+    z-index: 9999;
+    background: #fff;
+    box-shadow: 0 7px 14px #0003;
+    left: 0;
+    top: calc(100% + 0.5rem);
+    padding: 0.5em;
+    display: flex;
+    flex-flow: column;
+    gap: 0.5em;
+    border-radius: 5px;
+
+    button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em 1em;
+      text-transform: capitalize;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+
+      &:hover {
+        outline: none;
+        background-color: #ddd;
+      }
+    }
+  }
+
+  .reset {
+    background: #${colors.hex.primary._500};
+  }
+
+  ::after {
+    display: none;
+  }
+
+  button.active {
+    background-color: #${colors.hex.primary._500};
+    color: #000;
+    font-weight: 600;
+    &:hover {
+      background-color: #${colors.hex.primary._500};
+      cursor: default;
     }
   }
 `;

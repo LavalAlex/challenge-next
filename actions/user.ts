@@ -9,12 +9,12 @@ export enum USER_ACTIONS {
   ERROR = "ERROR",
 }
 
-export async function getPhotos({ camera, rover }: PhotosQuery) {
+export async function getPhotos({ camera, rover }: PhotosQuery, sol: number) {
   try {
     const {
       data: { photos },
     } = await Api.get<{ photos: PhotoModel[] }>(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&camera=${camera}&api_key=mn0cL646A86fzVD3vI3MdMpphxncHeUDjNCzgPja`
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${sol}&camera=${camera}&api_key=mn0cL646A86fzVD3vI3MdMpphxncHeUDjNCzgPja`
     );
 
     return { type: USER_ACTIONS.GET_PHOTOS, payload: photos };

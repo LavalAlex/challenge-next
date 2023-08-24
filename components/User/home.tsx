@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import {  useUser } from "@/hook";
-
+import { useUser } from "@/hook";
 
 import usePaginate from "@/hook/usePaginate";
-
 
 import InstagramCard from "../Image/Image";
 import { getPhotos } from "@/actions/user";
 import Filters from "../Filters";
 import IPhotoModel, { PhotosQuery } from "@/utils/types/models/PhotoModel";
-
+import { numberSol } from "@/utils/query";
 
 function HomeUser() {
   const {
@@ -18,30 +16,22 @@ function HomeUser() {
   } = useUser();
 
   const [query, setQuery] = useState<PhotosQuery>({
-    // orderBy: null,
     camera: "MAST",
     rover: "curiosity",
   });
   const [_section, _setSection] = useState<number | null>(null);
   const [_details, _setDetails] = useState<IPhotoModel | null>(null);
 
+  const [seeLike, setSeeLike] = useState<boolean>(false);
+
   const fetchPhotos = useCallback(async () => {
-    return await dispatch(getPhotos(query));
-  }, [dispatch, query]);
+    const sol = numberSol(query.camera);
+    return await dispatch(getPhotos(query, sol));
+  }, [dispatch, query.camera]);
 
   useEffect(() => {
     fetchPhotos();
   }, [fetchPhotos]);
-
-  const [likes, setLikes] = useState(0);
-
-  const handleLikeClick = () => {
-    setLikes(likes + 1);
-  };
-
-  const paginate = usePaginate(0, photos?.length);
-
-  const imagesToDisplay = photos?.slice(paginate.from, paginate.to);
 
   const _showDetails = (ticket: IPhotoModel) => {
     _setDetails(ticket);
@@ -62,19 +52,54 @@ function HomeUser() {
       }));
     }
   };
+  const [likedImages, setLikedImages] = useState<number[]>([]);
+
+  // Función para cargar las imágenes que han recibido "Me gusta" desde localStorage
+  const loadLikedImages = () => {
+    const likedImageIds = Object.keys(localStorage).filter((key) =>
+      key.startsWith("liked_")
+    );
+
+    const likedIds = likedImageIds.map((key) =>
+      parseInt(key.replace("liked_", ""), 10)
+    );
+
+    setLikedImages(likedIds);
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Verifica que estás en el lado del cliente antes de usar localStorage
+      loadLikedImages();
+    }
+  }, [seeLike]);
+
+  const filteredImages = photos?.filter((image) =>
+    likedImages.includes(image.id)
+  );
+
+  const images = seeLike ? filteredImages : photos;
+  const paginate = usePaginate(0, images?.length);
 
   return (
     <div>
       <Filters
-        data={photos || []}
+        data={images || []}
         onClick={_showDetails}
         onQuery={_onQuery}
         paginate={paginate}
+        setSeeLike={setSeeLike}
         filters
       />
       <div className="gallery">
-        {imagesToDisplay?.map(({ img_src }, index) => (
-          <InstagramCard key={index} imageUrl={img_src} likes={0} />
+        {images?.map(({ img_src, id, earth_date }, index) => (
+          <InstagramCard
+            key={index}
+            imageUrl={img_src}
+            id={id}
+            date={earth_date}
+            likes={0}
+          />
         ))}
       </div>
 

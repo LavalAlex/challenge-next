@@ -21,7 +21,8 @@ const init: LoginProps = {
   email: "",
   password: "",
 };
-type Props = Page;
+
+type Props = Page<{ email: string | null }>;
 function LoginPage({ meta }: Props) {
   const router = useRouter();
   const { create } = useAlerts();
@@ -36,7 +37,7 @@ function LoginPage({ meta }: Props) {
     e.preventDefault();
 
     const res = await dispatch(login(_inputs));
-    console.log(res)
+    console.log(res);
     if (!res?.payload)
       return create({ type: "error", message: "Error al iniciar sesion." });
     return router.push(`/home`);
@@ -114,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (isAuthenticated(ctx)) return ssrRedirects.home;
 
   const props: Props = {
-    email: null,
+    data: null,
     meta: {
       title: `Iniciar sesión | ${APP_NAME}`,
       description: `Inicia sesion con tu cuenta y accede a nuestra pagina de tickets`,

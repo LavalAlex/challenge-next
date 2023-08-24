@@ -22,7 +22,7 @@ interface IPhotoModel {
   sol?: number;
   camera: ICamare;
   img_src: string;
-  earth_date: Date;
+  earth_date: string;
   rover: IRover;
 }
 

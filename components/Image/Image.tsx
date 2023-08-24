@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ExpandedImageView from "./ExpandedImage";
 
 interface InstagramCardProps {
   imageUrl: string;
   likes: number;
+  date: string;
+  id: number;
 }
 
-const InstagramCard: React.FC<InstagramCardProps> = ({ imageUrl, likes }) => {
+const InstagramCard: React.FC<InstagramCardProps> = ({
+  imageUrl,
+  likes,
+  id,
+  date,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [isOpened, setIsOpened] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
+  useEffect(() => {
+    // Verifica si la tarjeta tiene un "Me gusta" guardado en el Local Storage
+    const liked = localStorage.getItem(`liked_${id}`);
+    if (liked === "true") {
+      setIsLiked(true);
+    }
+  }, [id]);
 
   const onClickExpanded = () => {
     setIsExpanded(false);
@@ -21,7 +33,11 @@ const InstagramCard: React.FC<InstagramCardProps> = ({ imageUrl, likes }) => {
   };
 
   const handleLikeClick = () => {
-    // Implementa la lógica para dar "me gusta" aquí
+    // Cambia el estado de "Me gusta" localmente
+    setIsLiked(!isLiked);
+
+    // Guarda el estado de "Me gusta" en el Local Storage
+    localStorage.setItem(`liked_${id}`, isLiked ? "false" : "true");
   };
 
   return (
@@ -40,15 +56,16 @@ const InstagramCard: React.FC<InstagramCardProps> = ({ imageUrl, likes }) => {
             onClick={onClickExpanded}
           />
         )}
-      </div>
+      </div>{" "}
+      <div>id: {id}</div>
+      <div>Date: {date}</div>
       <button className="like-button" onClick={handleLikeClick}>
-        ❤️ {likes}
+        {isLiked ? "❤️" : "🤍"}
       </button>
       {/* Botón para expandir o contraer la imagen */}
       {/* <button className="expand-button" onClick={toggleExpanded}>
         {isExpanded ? "Contraer" : "Expandir"}
       </button> */}
-
       <style jsx>{`
         /* Estilos CSS para la tarjeta */
         .card {
