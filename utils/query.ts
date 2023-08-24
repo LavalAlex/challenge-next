@@ -7,7 +7,7 @@ const _sol = [
   {
     rover: "all",
     camera: "RHAZ",
-    sol: 1000,
+    sol: 100,
   },
   {
     rover: "curiosity",
@@ -41,8 +41,8 @@ const _sol = [
   },
   {
     rover: "both",
-    camera: " MINITES",
-    sol: 100,
+    camera: "MINITES",
+    sol: 1000,
   },
 ];
 

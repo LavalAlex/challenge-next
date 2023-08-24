@@ -24,8 +24,11 @@ function HomeUser() {
 
   const [seeLike, setSeeLike] = useState<boolean>(false);
 
+  const [disliked, setDisliked] = useState<boolean>(false);
+
   const fetchPhotos = useCallback(async () => {
     const sol = numberSol(query.camera);
+    console.log(sol);
     return await dispatch(getPhotos(query, sol));
   }, [dispatch, query.camera]);
 
@@ -72,7 +75,7 @@ function HomeUser() {
       // Verifica que estás en el lado del cliente antes de usar localStorage
       loadLikedImages();
     }
-  }, [seeLike]);
+  }, [seeLike, disliked]);
 
   const filteredImages = photos?.filter((image) =>
     likedImages.includes(image.id)
@@ -80,6 +83,8 @@ function HomeUser() {
 
   const images = seeLike ? filteredImages : photos;
   const paginate = usePaginate(0, images?.length);
+
+  console.log(images[0]);
 
   return (
     <div>
@@ -92,15 +97,19 @@ function HomeUser() {
         filters
       />
       <div className="gallery">
-        {images?.map(({ img_src, id, earth_date }, index) => (
-          <InstagramCard
-            key={index}
-            imageUrl={img_src}
-            id={id}
-            date={earth_date}
-            likes={0}
-          />
-        ))}
+        {images
+          .slice(paginate.from, paginate.to)
+          ?.map(({ img_src, id, earth_date, camera }, index) => (
+            <InstagramCard
+              key={index}
+              imageUrl={img_src}
+              id={id}
+              date={earth_date}
+              seeLike={seeLike}
+              setDisliked={setDisliked}
+              nameCamera={camera.full_name}
+            />
+          ))}
       </div>
 
       <style jsx>{`
