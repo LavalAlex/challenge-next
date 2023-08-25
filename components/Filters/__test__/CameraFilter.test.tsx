@@ -17,7 +17,7 @@ describe("CameraFilter Component", () => {
   };
 
   it("correctly renders the cameras of the curiosity option.", () => {
-    const { getByText } = renderComponent({ rover: "curiosity" });
+    const { getByText } = renderComponent({});
 
     expect(getByText("RHAZ")).toBeDefined();
     expect(getByText("MAST")).toBeDefined();
@@ -39,15 +39,5 @@ describe("CameraFilter Component", () => {
     expect(onQueryMock).toHaveBeenCalledWith("camera", "MARDI");
     expect(onQueryMock).toHaveBeenCalledWith("camera", "NAVCAM");
     expect(onQueryMock).toHaveBeenCalledWith("camera", "MAHLI");
-  });
-
-  it("correctly renders the cameras of the not curiosity option", () => {
-    const { getByText } = renderComponent({ rover: "both" });
-
-    expect(getByText("FHAZ")).toBeDefined();
-    expect(getByText("RHAZ")).toBeDefined();
-    expect(getByText("NAVCAM")).toBeDefined();
-    expect(getByText("PANCAM")).toBeDefined();
-    expect(getByText("MINITES")).toBeDefined();
   });
 });

@@ -2,7 +2,7 @@ import { Pagination } from "@/hook/usePaginate";
 
 import { ReactNode, useMemo, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import RoverFilter from "./RoverFilter";
+import RoverFilter from "./DateFilter";
 
 import CameraFilter from "./CameraFilter";
 
@@ -30,8 +30,6 @@ interface Props {
 }
 
 function Filters({ data, filters, onQuery, paginate, setSeeLike }: Props) {
-  const [rover, setRover] = useState<string | null>("curiosity");
-
   const pages = useMemo(() => {
     if (!paginate) return [];
     const halfMaxPages = Math.ceil(PAGES_TO_SHOW / 2);
@@ -67,21 +65,15 @@ function Filters({ data, filters, onQuery, paginate, setSeeLike }: Props) {
               </THead>
               <THead>
                 <div className="flex">
-                  <p>Rover</p>
-                  {filters && (
-                    <RoverFilter onQuery={onQuery} setRover={setRover} />
-                  )}
+                  <p>Date</p>
+                  {filters && <RoverFilter onQuery={onQuery} />}
                 </div>
               </THead>
               <THead>
-                {rover && (
-                  <div className="flex">
-                    <p>Camera</p>
-                    {filters && (
-                      <CameraFilter onQuery={onQuery} rover={rover} />
-                    )}
-                  </div>
-                )}
+                <div className="flex">
+                  <p>Camera</p>
+                  {filters && <CameraFilter onQuery={onQuery} />}
+                </div>
               </THead>
             </tr>
           </thead>

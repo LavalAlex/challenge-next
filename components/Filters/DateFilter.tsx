@@ -1,25 +1,21 @@
 import { useShow } from "@/hook";
-import { Rover } from "@/utils/types/models/PhotoModel";
-
 import { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import { Container } from "./styles";
-
-const rover: Rover[] = ["curiosity", "opportunity", "spirit"];
+import { getRecentDates } from "@/utils/getArrayDate";
 
 export interface Props {
   onQuery?: (key: string, value: string | null) => any;
-  setRover: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-function RoverFilter({ onQuery, setRover }: Props) {
+const DATES = getRecentDates(5);
+
+function DateFilter({ onQuery }: Props) {
   const { state, hide, toggle } = useShow({});
   const [current, setCurrent] = useState<number | null>(0);
 
   const _onQuery = (value: string | null) => {
-    if (onQuery) onQuery("rover", value);
-
-    setRover(value);
+    if (onQuery) onQuery("earthDate", value);
 
     hide();
   };
@@ -31,7 +27,7 @@ function RoverFilter({ onQuery, setRover }: Props) {
       </button>
       {state && (
         <div className="options">
-          {rover.map((c, i) => (
+          {DATES.map((c, i) => (
             <>
               <button
                 disabled={current === i}
@@ -51,4 +47,4 @@ function RoverFilter({ onQuery, setRover }: Props) {
   );
 }
 
-export default RoverFilter;
+export default DateFilter;

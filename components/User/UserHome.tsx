@@ -17,8 +17,8 @@ function UserHome() {
   } = useUser();
 
   const [query, setQuery] = useState<PhotosQuery>({
-    camera: "MAST",
-    rover: "curiosity",
+    camera: "CHEMCAM",
+    earthDate: "2023-08-25",
   });
 
   const [_section, _setSection] = useState<number | null>(null);
@@ -29,8 +29,7 @@ function UserHome() {
   const [_paginate, _setPaginate] = useState();
 
   const fetchPhotos = useCallback(async () => {
-    const sol = numberSol(query);
-    return await dispatch(getPhotos(sol.query, sol.sol));
+    return await dispatch(getPhotos(query));
   }, [dispatch, query]);
 
   useEffect(() => {
@@ -44,10 +43,10 @@ function UserHome() {
         camera: value || null,
       }));
     }
-    if (key === "rover") {
+    if (key === "earthDate") {
       setQuery((old) => ({
         ...old,
-        rover: value || null,
+        earthDate: value || null,
       }));
     }
   };

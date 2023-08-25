@@ -37,10 +37,15 @@ export type CameraName =
   | "PANCAM"
   | "MINITES";
 
-export type Rover = "curiosity" | "opportunity" | "spirit";
+export type EarthDate =
+  | "2023-08-25"
+  | "2023-08-24"
+  | "2023-08-23"
+  | "2023-08-22"
+  | "2023-08-22";
 
 export interface PhotosQuery {
-  rover?: string | null;
+  earthDate?: string | null;
   camera?: string | null;
 }
 
