@@ -1,5 +1,5 @@
-import { USER_ACTIONS } from "@/actions/user";
 import { UserReducer } from "@/utils/types/user";
+import { USER_ACTIONS } from "@/actions/user";
 
 const userReducer: UserReducer = (store, action) => {
   if (action.type === USER_ACTIONS.GET_PHOTOS) {

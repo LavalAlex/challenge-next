@@ -1,7 +1,7 @@
-import { Reducer } from "react";
-import { AUTH_ACTIONS } from "@/actions/auth";
 import { Action, ActionError, Data, Dispatch } from "./generics";
+import { AUTH_ACTIONS } from "@/actions/auth";
 import { AuthModel } from "./models";
+import { Reducer } from "react";
 
 export type AuthStore = Data<AuthModel>;
 

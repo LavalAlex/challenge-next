@@ -32,9 +32,10 @@ function LoginPage() {
     e.preventDefault();
 
     const res = await dispatch(login(_inputs));
-    if (res?.type === AUTH_ACTIONS.ERROR)
-      return create({ type: "error", message: res.payload.error });
-    else {
+    if (res?.type === AUTH_ACTIONS.ERROR) {
+      const error = res.payload as unknown as string;
+      return create({ type: "error", message: error });
+    } else {
       return router.push(`/home`);
     }
   };
@@ -93,7 +94,7 @@ function LoginPage() {
             </PrimaryButton>
           </LoginForm>
           <div className="bottom">
-            <Link href="/auth/sigup">Create Account</Link>
+            <Link href="/auth/signup">Create Account</Link>
           </div>
         </div>
       </LoginContainer>

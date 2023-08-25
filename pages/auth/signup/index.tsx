@@ -35,9 +35,10 @@ function SignupPage({}: Props) {
 
     const res = await dispatch(sigup(_inputs));
 
-    if (res?.type === AUTH_ACTIONS.ERROR)
-      return create({ type: "error", message: res.payload.error });
-    else {
+    if (res?.type === AUTH_ACTIONS.ERROR) {
+      const error = res.payload as unknown as string;
+      return create({ type: "error", message: error });
+    } else {
       create({ type: "success", message: "Account created success." });
       return router.push(`/auth/login`);
     }

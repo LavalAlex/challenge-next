@@ -24,7 +24,7 @@ export async function login(_cred: LoginProps) {
 
     return { type: AUTH_ACTIONS.LOGIN, payload: response.data };
   } catch (e: any) {
-    return { type: AUTH_ACTIONS.ERROR, payload: e.response.data };
+    return { type: AUTH_ACTIONS.ERROR, payload: e.response.data.error };
   }
 }
 
@@ -38,7 +38,7 @@ export async function sigup(_cred: LoginProps) {
 
     return { type: AUTH_ACTIONS.SIGNUP, payload: response.data };
   } catch (e: any) {
-    return { type: AUTH_ACTIONS.ERROR, payload: e.response.data };
+    return { type: AUTH_ACTIONS.ERROR, payload: e.response.data.error };
   }
 }
 

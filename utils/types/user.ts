@@ -1,7 +1,7 @@
+import { Action, ActionError, Dispatch } from "./generics";
 import { USER_ACTIONS } from "@/actions/user";
-import { Reducer } from "react";
-import { Action, ActionError, Data, Dispatch } from "./generics";
 import { PhotoModel } from "./models";
+import { Reducer } from "react";
 
 export interface UserStore {
   photos: PhotoModel[];

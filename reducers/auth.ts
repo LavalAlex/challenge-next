@@ -1,6 +1,6 @@
+import { deleteCookie, setCookie } from "cookies-next";
 import { AuthReducer } from "@/utils/types/auth";
 import { AUTH_ACTIONS } from "@/actions/auth";
-import { deleteCookie, setCookie } from "cookies-next";
 import { AUTH_COOKIE } from "@/config";
 
 const authReducer: AuthReducer = (state, action) => {
