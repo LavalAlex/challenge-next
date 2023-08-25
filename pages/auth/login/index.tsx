@@ -7,7 +7,6 @@ import { PrimaryButton } from "@/components/Buttons";
 
 import { useAuth } from "@/hook";
 import { InputChange } from "@/utils/types/generics";
-import { Page } from "@/utils/types";
 import { AUTH_ACTIONS, login, LoginProps } from "@/actions/auth";
 import { Banner, LoginContainer, LoginForm } from "@/styles/Auth.styles";
 import useAlerts from "@/hook/useAlerts";

@@ -16,27 +16,28 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      const connection = await connectToDatabase();
       const { email, password } = req.body;
-
+      
       if (!email || !password) {
         return res.status(400).json({
           error: "Please provide a email or password.",
         });
       }
-
+      
       if (!isValidEmail(email)) {
         return res.status(400).json({
           error: "Please provide a valid email.",
         });
       }
-
+      
       if (!isValidPassword(password)) {
         return res.status(400).json({
           error: "The password must be at least 8 characters long.",
         });
       }
-
+      
+      const connection = await connectToDatabase();
+      
       const [rows] = (await connection.query(
         "SELECT * FROM users WHERE email = ? LIMIT 1",
         [email]

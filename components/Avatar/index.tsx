@@ -5,8 +5,6 @@ export interface AvatarProps {
   onClick?: () => any;
 }
 function Avatar({ data, onClick }: AvatarProps) {
-  const name = `${data.firstName} ${data.lastName}`;
-
   const _onClick = () => {
     if (onClick) onClick();
   };

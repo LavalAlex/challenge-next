@@ -18,8 +18,9 @@ const init: LoginProps = {
   password: "",
 };
 
-type Props = Page<{ email: string | null }>;
-function SigupPage({}: Props) {
+export type Props = Page<{ email: string | null }>;
+
+function SignupPage({}: Props) {
   const router = useRouter();
   const { create } = useAlerts();
   const { dispatch } = useAuth();
@@ -104,4 +105,4 @@ function SigupPage({}: Props) {
   );
 }
 
-export default SigupPage;
+export default SignupPage;
