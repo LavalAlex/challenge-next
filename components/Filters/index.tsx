@@ -87,7 +87,7 @@ function Filters({ data, filters, onQuery, paginate, setSeeLike }: Props) {
           </thead>
         </ButtonFilter>
       </div>
-      {!!data.length ? null : <p className="empty">Not Found Photos</p>}
+      {!!data.length ? null : <p className="empty">Photos Not Found.</p>}
       {paginate &&
       typeof paginate.current === "number" &&
       typeof paginate.total_pages === "number" &&

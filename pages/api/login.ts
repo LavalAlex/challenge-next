@@ -8,7 +8,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../utils/database";
 import { LoginProps } from "@/actions/auth";
-import { isValidEmail, isValidPassword } from "@/utils/validate";
+import { isValidEmail } from "@/utils/validate";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -23,12 +23,6 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       if (!isValidEmail(email)) {
         return res.status(400).json({
           error: "Please provide a valid email.",
-        });
-      }
-
-      if (!isValidPassword(password)) {
-        return res.status(400).json({
-          error: "The password must be at least 8 characters long.",
         });
       }
 
