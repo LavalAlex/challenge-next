@@ -16,14 +16,14 @@ const curiosity: CameraName[] = [
 
 const both: CameraName[] = ["FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"];
 
-interface Props {
+export interface Props {
   onQuery?: (key: string, value: string | null) => any;
   rover?: string | null;
 }
 
 function CameraFilter({ onQuery, rover }: Props) {
   const { state, hide, toggle } = useShow({});
-  const [current, setCurrent] = useState<number | null>(null);
+  const [current, setCurrent] = useState<number | null>(0);
 
   const _onQuery = (value: string | null) => {
     if (onQuery) onQuery("camera", value);

@@ -1,22 +1,24 @@
 import { useShow } from "@/hook";
 import { useState } from "react";
-import { styled } from "styled-components";
 import { Container } from "./styles";
 import { BiFilterAlt } from "react-icons/bi";
+import { Pagination } from "@/hook/usePaginate";
 
 const like = ["YES", "NO"];
 
-interface Props {
+export interface Props {
   setSeeLike: React.Dispatch<React.SetStateAction<boolean>>;
+  pagination?: Pagination;
 }
 
-function LikeFilter({ setSeeLike }: Props) {
+function LikeFilter({ setSeeLike, pagination }: Props) {
   const { state, hide, toggle } = useShow({});
   const [current, setCurrent] = useState<number | null>(null);
 
   const _onQuery = (value: string | null) => {
     if (value === "YES") setSeeLike(true);
     if (value === "NO") setSeeLike(false);
+    if (pagination) pagination.goto(0);
     hide();
   };
 

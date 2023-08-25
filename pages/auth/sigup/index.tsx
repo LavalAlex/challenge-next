@@ -1,5 +1,4 @@
 import { FormEvent, useMemo, useState } from "react";
-import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layouts";
 import { PasswordInput, TextInput } from "@/components/Inputs";
@@ -7,8 +6,6 @@ import { PrimaryButton } from "@/components/Buttons";
 
 import { useAuth } from "@/hook";
 import { InputChange } from "@/utils/types/generics";
-import isAuthenticated from "@/utils/authentication";
-import { ssrRedirects } from "@/utils/routes";
 import { Page } from "@/utils/types";
 import { AUTH_ACTIONS, LoginProps, sigup } from "@/actions/auth";
 import { Banner, LoginContainer, LoginForm } from "@/styles/Auth.styles";
@@ -56,7 +53,7 @@ function SigupPage({}: Props) {
         <div className="left">
           <Image
             className="img"
-            src={"https://www.4agiledev.com/about.png"}
+            src={"https://www.4agiledev.com/hero.png"}
             alt=""
             fill
           />
@@ -65,7 +62,7 @@ function SigupPage({}: Props) {
           <Banner>
             <Image
               className="img"
-              src={"https://www.4agiledev.com/hero.png"}
+              src={"https://www.4agiledev.com/about.png"}
               alt=""
               fill
             />
@@ -97,10 +94,10 @@ function SigupPage({}: Props) {
             <PrimaryButton disabled={isDisabled} type="submit">
               Register
             </PrimaryButton>
-            <div className="bottom">
-              <Link href="/auth/login">Login Account</Link>
-            </div>
           </LoginForm>
+          <div className="bottom">
+            <Link href="/auth/login">Login Account</Link>
+          </div>
         </div>
       </LoginContainer>
     </Layout>
@@ -108,12 +105,3 @@ function SigupPage({}: Props) {
 }
 
 export default SigupPage;
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  if (isAuthenticated(ctx)) return ssrRedirects.home;
-
-  const props: Props = {
-    data: null,
-  };
-  return { props };
-};

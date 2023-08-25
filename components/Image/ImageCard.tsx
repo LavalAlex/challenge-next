@@ -36,7 +36,7 @@ function ImageCard({
   const [isLiked, setIsLiked] = useState({ id: 0, isLiked: false });
 
   useEffect(() => {
-    // Verifica si la tarjeta tiene un "Me gusta" guardado en el Local Storage
+    // Check if the card has a "Like" saved in the Local Storage
     const liked = localStorage.getItem(`liked_${id}`);
     if (liked === "true") {
       setIsLiked((old) => ({ ...old, id, isLiked: true }));
@@ -50,11 +50,11 @@ function ImageCard({
   };
 
   const handleLikeClick = () => {
-    // Cambia el estado de "Me gusta" localmente
+    // Change the "Like" status locally
     localStorage.setItem(`liked_${id}`, isLiked.isLiked ? "false" : "true");
     setIsLiked((old) => ({ ...old, id, isLiked: !old.isLiked }));
-    // Guarda el estado de "Me gusta" en el Local Storage
 
+    // Save "Like" status in Local Storage
     if (seeLike) {
       setDisliked((old) => !old);
     }
@@ -69,7 +69,7 @@ function ImageCard({
           <>
             <Image className="image" src={imageUrl} alt="" />{" "}
             <div className="overlay" onClick={onClickExpanded}>
-              <p>¡Haz clic para agrandar!</p>
+              <p>¡Click to enlarge!</p>
             </div>
           </>
         )}
@@ -91,3 +91,4 @@ function ImageCard({
 }
 
 export default ImageCard;
+export type { ImageCardProps };

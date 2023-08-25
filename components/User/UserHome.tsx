@@ -3,13 +3,14 @@ import { useUser } from "@/hook";
 
 import usePaginate from "@/hook/usePaginate";
 
-import ImageCard from "../Image/Image";
+import ImageCard from "../Image/ImageCard";
 import { getPhotos } from "@/actions/user";
 import Filters from "../Filters";
-import IPhotoModel, { PhotosQuery } from "@/utils/types/models/PhotoModel";
+import { PhotosQuery } from "@/utils/types/models/PhotoModel";
 import { numberSol } from "@/utils/query";
+import { styled } from "styled-components";
 
-function HomeUser() {
+function UserHome() {
   const {
     store: { photos },
     dispatch,
@@ -19,26 +20,22 @@ function HomeUser() {
     camera: "MAST",
     rover: "curiosity",
   });
-  const [_section, _setSection] = useState<number | null>(null);
-  const [_details, _setDetails] = useState<IPhotoModel | null>(null);
 
+  const [_section, _setSection] = useState<number | null>(null);
+  const [likedImages, setLikedImages] = useState<number[]>([]);
+  const [disliked, setDisliked] = useState<boolean>(false);
   const [seeLike, setSeeLike] = useState<boolean>(false);
 
-  const [disliked, setDisliked] = useState<boolean>(false);
+  const [_paginate, _setPaginate] = useState();
 
   const fetchPhotos = useCallback(async () => {
-    const sol = numberSol(query.camera);
-    return await dispatch(getPhotos(query, sol));
-  }, [dispatch, query.camera]);
+    const sol = numberSol(query);
+    return await dispatch(getPhotos(sol.query, sol.sol));
+  }, [dispatch, query]);
 
   useEffect(() => {
     fetchPhotos();
   }, [fetchPhotos]);
-
-  const _showDetails = (ticket: IPhotoModel) => {
-    _setDetails(ticket);
-    _setSection(3);
-  };
 
   const _onQuery = (key: string, value: any) => {
     if (key === "camera") {
@@ -54,9 +51,8 @@ function HomeUser() {
       }));
     }
   };
-  const [likedImages, setLikedImages] = useState<number[]>([]);
 
-  // Función para cargar las imágenes que han recibido "Me gusta" desde localStorage
+  // Function to load the images that have received "Likes" from localStorage
   const loadLikedImages = () => {
     const likedImageIds = Object.keys(localStorage).filter((key) =>
       key.startsWith("liked_")
@@ -69,7 +65,6 @@ function HomeUser() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Verifica que estás en el lado del cliente antes de usar localStorage
       loadLikedImages();
     }
   }, [seeLike, disliked]);
@@ -82,16 +77,15 @@ function HomeUser() {
   const paginate = usePaginate(0, images?.length);
 
   return (
-    <div>
+    <Container>
       <Filters
         data={images || []}
-        onClick={_showDetails}
         onQuery={_onQuery}
         paginate={paginate}
         setSeeLike={setSeeLike}
         filters
       />
-      <div className="gallery">
+      <Gallery>
         {images
           .slice(paginate.from, paginate.to)
           ?.map(({ img_src, id, earth_date, camera }, index) => (
@@ -105,37 +99,18 @@ function HomeUser() {
               nameCamera={camera.full_name}
             />
           ))}
-      </div>
-
-      <style jsx>{`
-        .gallery {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .pagination {
-          display: flex;
-          justify-content: center;
-          margin-top: 20px;
-        }
-
-        .pagination button {
-          margin: 0 5px;
-          padding: 5px 10px;
-          border: none;
-          background-color: #007bff;
-          color: #fff;
-          cursor: pointer;
-        }
-
-        .pagination button.active {
-          background-color: #555;
-        }
-      `}</style>
-    </div>
+      </Gallery>
+    </Container>
   );
 }
 
-export default HomeUser;
+export default UserHome;
+
+const Container = styled.div``;
+
+const Gallery = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;

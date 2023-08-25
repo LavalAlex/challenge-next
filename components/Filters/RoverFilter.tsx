@@ -7,14 +7,14 @@ import { Container } from "./styles";
 
 const rover: Rover[] = ["curiosity", "opportunity", "spirit"];
 
-interface Props {
+export interface Props {
   onQuery?: (key: string, value: string | null) => any;
   setRover: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
 function RoverFilter({ onQuery, setRover }: Props) {
   const { state, hide, toggle } = useShow({});
-  const [current, setCurrent] = useState<number | null>(null);
+  const [current, setCurrent] = useState<number | null>(0);
 
   const _onQuery = (value: string | null) => {
     if (onQuery) onQuery("rover", value);

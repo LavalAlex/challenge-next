@@ -18,7 +18,6 @@ export async function getPhotos({ camera, rover }: PhotosQuery, sol: number) {
 
     return { type: USER_ACTIONS.GET_PHOTOS, payload: photos };
   } catch (e: any) {
-    console.debug(e.reponse);
     return { type: USER_ACTIONS.ERROR, payload: [] };
   }
 }

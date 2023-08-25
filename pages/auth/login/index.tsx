@@ -1,5 +1,4 @@
 import { FormEvent, useMemo, useState } from "react";
-import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layouts";
 
@@ -8,8 +7,6 @@ import { PrimaryButton } from "@/components/Buttons";
 
 import { useAuth } from "@/hook";
 import { InputChange } from "@/utils/types/generics";
-import isAuthenticated from "@/utils/authentication";
-import { ssrRedirects } from "@/utils/routes";
 import { Page } from "@/utils/types";
 import { AUTH_ACTIONS, login, LoginProps } from "@/actions/auth";
 import { Banner, LoginContainer, LoginForm } from "@/styles/Auth.styles";
@@ -22,7 +19,6 @@ const init: LoginProps = {
   password: "",
 };
 
-type Props = Page<{ email: string | null }>;
 function LoginPage() {
   const router = useRouter();
   const { create } = useAlerts();
@@ -107,12 +103,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  if (isAuthenticated(ctx)) return ssrRedirects.home;
-
-  const props: Props = {
-    data: null,
-  };
-  return { props };
-};

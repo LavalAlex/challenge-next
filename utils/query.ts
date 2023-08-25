@@ -1,3 +1,5 @@
+import { PhotosQuery } from "./types/models/PhotoModel";
+
 const _sol = [
   {
     rover: "curiosity",
@@ -46,13 +48,18 @@ const _sol = [
   },
 ];
 
-export const numberSol = (_camera: string | null | undefined): number => {
-  let flag = 100;
+export const numberSol = (query: PhotosQuery) => {
+  let flag = { sol: 100, query: { ...query } };
   _sol.forEach(({ camera, sol }, _i) => {
-    if (camera == _camera) {
-      flag = sol;
+    if (camera == query.camera) {
+      flag.sol = sol;
+    }
+    if (
+      (query.rover === "opportunity" || query.rover === "spirit") &&
+      query.camera === "MAST"
+    ) {
+      flag.query.camera = "PANCAM";
     }
   });
-
   return flag;
 };

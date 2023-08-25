@@ -1,5 +1,5 @@
 import { Api } from "@/utils/axios";
-import { AuthAction, AuthError } from "@/utils/types/auth";
+import { AuthAction } from "@/utils/types/auth";
 import { AuthModel } from "@/utils/types/models";
 
 export enum AUTH_ACTIONS {

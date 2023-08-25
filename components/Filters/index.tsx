@@ -1,6 +1,6 @@
 import { Pagination } from "@/hook/usePaginate";
 
-import { ReactNode,  useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import RoverFilter from "./RoverFilter";
 
@@ -23,21 +23,13 @@ const THead = ({ children, className }: Data) => (
 const PAGES_TO_SHOW = 5;
 interface Props {
   data: IPhotoModel[];
-  onClick?: (photos: IPhotoModel) => any;
   paginate?: Pagination;
   onQuery?: (key: string, value: string | null) => any;
   filters?: boolean;
   setSeeLike: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Filters({
-  data,
-  filters,
-  onClick,
-  onQuery,
-  paginate,
-  setSeeLike,
-}: Props) {
+function Filters({ data, filters, onQuery, paginate, setSeeLike }: Props) {
   const [rover, setRover] = useState<string | null>("curiosity");
 
   const pages = useMemo(() => {
@@ -62,13 +54,15 @@ function Filters({
   return (
     <FilterContainer>
       <div className="container">
-        <ButtonFilter $clickable={!!onClick}>
+        <ButtonFilter>
           <thead>
             <tr>
               <THead>
                 <div className="flex">
                   <p>Like</p>
-                  {filters && <LikeFilter setSeeLike={setSeeLike} />}
+                  {filters && (
+                    <LikeFilter setSeeLike={setSeeLike} pagination={paginate} />
+                  )}
                 </div>
               </THead>
               <THead>

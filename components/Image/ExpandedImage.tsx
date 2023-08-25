@@ -6,11 +6,6 @@ interface ExpandedImageProps {
   onClose: () => void;
 }
 
-interface ExpandedImageProps {
-  imageUrl: string;
-  onClose: () => void;
-}
-
 function ExpandedImage({ imageUrl, onClose }: ExpandedImageProps) {
   return (
     <Overlay>
@@ -20,7 +15,8 @@ function ExpandedImage({ imageUrl, onClose }: ExpandedImageProps) {
   );
 }
 export default ExpandedImage;
-
+export type { ExpandedImageProps };
+  
 const Overlay = styled.div`
   position: fixed;
   top: 0;

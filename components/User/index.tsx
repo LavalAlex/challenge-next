@@ -1,13 +1,13 @@
 import { UserProvider } from "@/context";
 
 import Layout from "../Layouts";
-import HomeUser from "./home";
+import UserHome from "./UserHome";
 
 function User() {
   return (
     <Layout>
       <UserProvider>
-        <HomeUser />
+        <UserHome />
       </UserProvider>
     </Layout>
   );
