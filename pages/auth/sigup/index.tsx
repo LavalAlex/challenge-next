@@ -2,7 +2,6 @@ import { FormEvent, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layouts";
-
 import { PasswordInput, TextInput } from "@/components/Inputs";
 import { PrimaryButton } from "@/components/Buttons";
 
@@ -11,7 +10,7 @@ import { InputChange } from "@/utils/types/generics";
 import isAuthenticated from "@/utils/authentication";
 import { ssrRedirects } from "@/utils/routes";
 import { Page } from "@/utils/types";
-import { AUTH_ACTIONS, login, LoginProps } from "@/actions/auth";
+import { AUTH_ACTIONS, LoginProps, sigup } from "@/actions/auth";
 import { Banner, LoginContainer, LoginForm } from "@/styles/Auth.styles";
 import useAlerts from "@/hook/useAlerts";
 import Image from "next/image";
@@ -23,7 +22,7 @@ const init: LoginProps = {
 };
 
 type Props = Page<{ email: string | null }>;
-function LoginPage() {
+function SigupPage({}: Props) {
   const router = useRouter();
   const { create } = useAlerts();
   const { dispatch } = useAuth();
@@ -36,11 +35,13 @@ function LoginPage() {
   const _onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const res = await dispatch(login(_inputs));
+    const res = await dispatch(sigup(_inputs));
+
     if (res?.type === AUTH_ACTIONS.ERROR)
       return create({ type: "error", message: res.payload.error });
     else {
-      return router.push(`/home`);
+      create({ type: "success", message: "Account created success." });
+      return router.push(`/auth/login`);
     }
   };
 
@@ -71,7 +72,7 @@ function LoginPage() {
           </Banner>
 
           <LoginForm onSubmit={_onSubmit}>
-            <h2>Login</h2>
+            <h2>Register</h2>
             <div className="inputs">
               <TextInput
                 label="Email"
@@ -94,19 +95,19 @@ function LoginPage() {
             </div>
 
             <PrimaryButton disabled={isDisabled} type="submit">
-              Login
+              Register
             </PrimaryButton>
+            <div className="bottom">
+              <Link href="/auth/login">Login Account</Link>
+            </div>
           </LoginForm>
-          <div className="bottom">
-            <Link href="/auth/sigup">Create Account</Link>
-          </div>
         </div>
       </LoginContainer>
     </Layout>
   );
 }
 
-export default LoginPage;
+export default SigupPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (isAuthenticated(ctx)) return ssrRedirects.home;

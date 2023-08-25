@@ -32,7 +32,7 @@ export const NavbarLeft = styled.div`
     width: 12rem;
     height: 100%;
     background-color: #fff;
-    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+    clip-path: polygon(0 0, 65% 0, 100% 50%, 65% 100%, 0 100%);
   }
 `;
 

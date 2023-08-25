@@ -1,21 +1,14 @@
 import Layout from "@/components/Layouts";
-import Metadata from "@/components/Metadata";
-import { APP_NAME } from "@/config";
 import colors from "@/styles/colors";
 import { styled } from "styled-components";
 
 function _404() {
   return (
     <Layout>
-      <Metadata
-        title={`Pagina no econtrada | ${APP_NAME}`}
-        description={`No pudimos encontrar la pagina que está buscando.`}
-      />
-
       <Container>
         <div className="text">
           <p>404</p>
-          <h1>No pudimos encontrar la pagina</h1>
+          <h1>Page not found.</h1>
         </div>
 
         <div className="overlay">404</div>

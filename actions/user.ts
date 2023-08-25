@@ -1,4 +1,3 @@
-import { API_NASA_GET_PHOTOS } from "@/config";
 import { Api } from "@/utils/axios";
 import { PhotoModel } from "@/utils/types/models";
 import { PhotosQuery } from "@/utils/types/models/PhotoModel";

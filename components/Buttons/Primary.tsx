@@ -10,7 +10,7 @@ const PrimaryButton = styled.button`
   box-shadow: 0 5px 10px #${colors.hex.primary._500}22;
   background-color: #${colors.hex.primary._500};
   border: 2px solid #eee0;
-  color: #fff;
+  color: #000;
 
   font-weight: 600;
 
@@ -19,8 +19,9 @@ const PrimaryButton = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #${colors.hex.primary._400};
+    background-color: #${colors.hex.primary._100};
     box-shadow: 0 5px 10px #${colors.hex.primary._500}44;
+    color: #fff;
   }
 
   &:focus {

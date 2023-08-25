@@ -1,9 +1,6 @@
 import { Pagination } from "@/hook/usePaginate";
-import { preferedDate } from "@/utils/date";
-import { getLocal, setLocal } from "@/utils/helpers";
-import timestamp from "@/utils/timestamp";
 
-import { ReactNode, useEffect, useId, useMemo, useState } from "react";
+import { ReactNode,  useMemo, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import RoverFilter from "./RoverFilter";
 
@@ -21,11 +18,6 @@ const THead = ({ children, className }: Data) => (
   <th className={className}>
     {typeof children === "string" ? <p>{children}</p> : children}
   </th>
-);
-const TData = ({ children, className }: Data) => (
-  <td className={className}>
-    {typeof children === "string" ? <p>{children}</p> : children}
-  </td>
 );
 
 const PAGES_TO_SHOW = 5;
@@ -120,13 +112,14 @@ function Filters({
               </>
             )}
             {pages.map((i) => (
-              // eslint-disable-next-line react/jsx-key
-              <button
-                onClick={() => paginate.goto(i)}
-                disabled={i + 1 === paginate.current}
-              >
-                {i + 1}
-              </button>
+              <>
+                <button
+                  onClick={() => paginate.goto(i)}
+                  disabled={i + 1 === paginate.current}
+                >
+                  {i + 1}
+                </button>
+              </>
             ))}
             {!pages.includes(paginate.total_pages - 1) && (
               <>

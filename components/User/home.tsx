@@ -3,7 +3,7 @@ import { useUser } from "@/hook";
 
 import usePaginate from "@/hook/usePaginate";
 
-import InstagramCard from "../Image/Image";
+import ImageCard from "../Image/Image";
 import { getPhotos } from "@/actions/user";
 import Filters from "../Filters";
 import IPhotoModel, { PhotosQuery } from "@/utils/types/models/PhotoModel";
@@ -28,7 +28,6 @@ function HomeUser() {
 
   const fetchPhotos = useCallback(async () => {
     const sol = numberSol(query.camera);
-    console.log(sol);
     return await dispatch(getPhotos(query, sol));
   }, [dispatch, query.camera]);
 
@@ -62,11 +61,9 @@ function HomeUser() {
     const likedImageIds = Object.keys(localStorage).filter((key) =>
       key.startsWith("liked_")
     );
-
     const likedIds = likedImageIds.map((key) =>
       parseInt(key.replace("liked_", ""), 10)
     );
-
     setLikedImages(likedIds);
   };
 
@@ -84,8 +81,6 @@ function HomeUser() {
   const images = seeLike ? filteredImages : photos;
   const paginate = usePaginate(0, images?.length);
 
-  console.log(images[0]);
-
   return (
     <div>
       <Filters
@@ -100,7 +95,7 @@ function HomeUser() {
         {images
           .slice(paginate.from, paginate.to)
           ?.map(({ img_src, id, earth_date, camera }, index) => (
-            <InstagramCard
+            <ImageCard
               key={index}
               imageUrl={img_src}
               id={id}

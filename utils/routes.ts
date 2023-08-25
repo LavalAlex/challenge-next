@@ -6,8 +6,6 @@ const routes = {
   home: "/home",
   login: "/auth/login",
   signup: "/auth/signup",
-  enable: "/auth/enable",
-  recovery: "/auth/recovery",
 };
 
 export default routes;
@@ -21,6 +19,4 @@ export const ssrRedirects: SSRRedirects = {
   home: { redirect: { destination: routes.home, permanent: false } },
   login: { redirect: { destination: routes.login, permanent: false } },
   signup: { redirect: { destination: routes.signup, permanent: false } },
-  enable: { redirect: { destination: routes.enable, permanent: false } },
-  recovery: { redirect: { destination: routes.recovery, permanent: false } },
 };

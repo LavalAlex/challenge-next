@@ -1,11 +1,8 @@
 import { useShow } from "@/hook";
-import colors from "@/styles/colors";
-import { CameraName } from "@/utils/types/models/PhotoModel";
-import { Priority as TPriority } from "@/utils/types/models/TicketModel";
 import { useState } from "react";
-import { BiFilterAlt } from "react-icons/bi";
 import { styled } from "styled-components";
 import { Container } from "./styles";
+import { BiFilterAlt } from "react-icons/bi";
 
 const like = ["YES", "NO"];
 
@@ -31,17 +28,18 @@ function LikeFilter({ setSeeLike }: Props) {
       {state && (
         <div className="options">
           {like.map((p, i) => (
-            // eslint-disable-next-line react/jsx-key
-            <button
-              disabled={current === i}
-              className={current === i ? "active" : ""}
-              onClick={() => {
-                setCurrent(i);
-                _onQuery(p);
-              }}
-            >
-              {p}
-            </button>
+            <>
+              <button
+                disabled={current === i}
+                className={current === i ? "active" : ""}
+                onClick={() => {
+                  setCurrent(i);
+                  _onQuery(p);
+                }}
+              >
+                {p}
+              </button>
+            </>
           ))}
         </div>
       )}

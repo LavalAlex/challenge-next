@@ -73,7 +73,6 @@ export const ButtonFilter = styled.table<Props>`
   }
 
   thead {
-
     th {
       text-align: left;
       padding: 0.5em 0 !important;

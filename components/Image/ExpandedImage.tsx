@@ -1,64 +1,52 @@
-// ExpandedImageView.tsx
-
 import React from "react";
+import styled from "styled-components";
 
-interface ExpandedImageViewProps {
+interface ExpandedImageProps {
   imageUrl: string;
-  onClose: () => void; // Función para cerrar la vista expandida
+  onClose: () => void;
 }
 
-interface ExpandedImageViewProps {
+interface ExpandedImageProps {
   imageUrl: string;
-  onClose: () => void; // Función para cerrar la vista expandida
+  onClose: () => void;
 }
 
-const ExpandedImageView: React.FC<ExpandedImageViewProps> = ({ imageUrl, onClose }) => {
+function ExpandedImage({ imageUrl, onClose }: ExpandedImageProps) {
   return (
-    <div className="expanded-image-view">
-      <div className="expanded-image-container">
-        <img className="expanded-image" src={imageUrl} alt="Instagram" />
-        <button className="close-button" onClick={onClose}>
-          Cerrar
-        </button>
-      </div>
-
-      <style jsx>{`
-        /* Estilos CSS para la vista expandida */
-        .expanded-image-view {
-          width: 100%;
-          height: 100%;
-          text-align: center;
-          background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro */
-          position: fixed;
-          top: 0;
-          left: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 9999; /* Asegura que esté en la parte superior */
-        }
-
-        .expanded-image-container {
-          position: relative;
-        }
-
-        .expanded-image {
-          max-width: 100%; /* Tamaño máximo para la imagen */
-          max-height: 90vh; /* Altura máxima */
-        }
-
-        .close-button {
-          background-color: transparent;
-          border: none;
-          color: white;
-          font-size: 1rem;
-          cursor: pointer;
-          position: absolute;
-          top: 10px;
-          right: 10px;
-        }
-      `}</style>
-    </div>
+    <Overlay>
+      <Image src={imageUrl} alt="Instagram" />
+      <CloseButton onClick={onClose}>✕</CloseButton>
+    </Overlay>
   );
-};
-export default ExpandedImageView;
+}
+export default ExpandedImage;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+  z-index: 9999; /* Z-index alto para estar al frente de todos */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+`;

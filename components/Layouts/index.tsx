@@ -16,26 +16,28 @@ const inter = Inter({
 interface Props {
   children?: ReactNode;
 }
+
 function Layout({ children }: Props) {
   const { alerts, deleteAlert } = useAlerts();
   return (
     <Container className={inter.className}>
       <Alerts>
         {alerts.map((a) => (
-          // eslint-disable-next-line react/jsx-key
-          <li
-            role="button"
-            className={`alert ${a.type}`}
-            onClick={() => deleteAlert(a.$id)}
-          >
-            <div className="icon-container">
-              {a.type === "error" && <BiErrorAlt />}
-            </div>
-            <p className="message">{a.message}</p>
-            <div className="icon-container close">
-              <BiTrashAlt />
-            </div>
-          </li>
+          <>
+            <li
+              role="button"
+              className={`alert ${a.type}`}
+              onClick={() => deleteAlert(a.$id)}
+            >
+              <div className="icon-container">
+                {a.type === "error" && <BiErrorAlt />}
+              </div>
+              <p className="message">{a.message}</p>
+              <div className="icon-container close">
+                <BiTrashAlt />
+              </div>
+            </li>
+          </>
         ))}
       </Alerts>
 

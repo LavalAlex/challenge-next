@@ -5,10 +5,10 @@ import { AuthModel } from "@/utils/types/models";
 export enum AUTH_ACTIONS {
   LOGOUT = "AUTH_LOGOUT",
   LOGIN = "AUTH_LOGIN",
+  SIGNUP = "AUTH_SIGNUP",
   ENABLE = "AUTH_ENABLE",
   RECOVERY = "AUTH_RECOVERY",
   FROM_COOKIE = "AUTH_FROM_COOKIE",
-
   LOADING = "AUTH_LOADING",
   ERROR = "AUTH_ERROR",
 }
@@ -22,12 +22,9 @@ export async function login(_cred: LoginProps) {
   try {
     const response = await Api.post("/login", { ..._cred });
 
-    console.log(response);
-
     return { type: AUTH_ACTIONS.LOGIN, payload: response.data };
   } catch (e: any) {
-    console.debug(e);
-    return { type: AUTH_ACTIONS.ERROR, payload: null };
+    return { type: AUTH_ACTIONS.ERROR, payload: e.response.data };
   }
 }
 
@@ -35,39 +32,15 @@ export function logout(): AuthAction {
   return { type: AUTH_ACTIONS.LOGOUT, payload: null };
 }
 
-// export interface EnableProps {
-//   email: string;
-//   password: string;
-//   code: string;
-// }
-// export async function enable(_cred: EnableProps) {
-//   try {
-//     const { data } = await Api<AuthModel>({
-//       url: `/auth/enableAccount`,
-//       method: "PUT",
-//       data: _cred,
-//     });
-//     return { type: AUTH_ACTIONS.ENABLE, payload: data };
-//   } catch (e: any) {
-//     return { type: AUTH_ACTIONS.ERROR, payload: null };
-//   }
-// }
+export async function sigup(_cred: LoginProps) {
+  try {
+    const response = await Api.post("/signup", { ..._cred });
 
-// export interface RecoveryProps {
-//   email: string;
-// }
-// export async function recovery(_cred: RecoveryProps) {
-//   try {
-//     const { data } = await Api<AuthModel>({
-//       url: `/auth/forgotPassword`,
-//       method: "PUT",
-//       data: _cred,
-//     });
-//     return { type: AUTH_ACTIONS.RECOVERY, payload: data };
-//   } catch (e: any) {
-//     return { type: AUTH_ACTIONS.ERROR, payload: null };
-//   }
-// }
+    return { type: AUTH_ACTIONS.SIGNUP, payload: response.data };
+  } catch (e: any) {
+    return { type: AUTH_ACTIONS.ERROR, payload: e.response.data };
+  }
+}
 
 export function loadingAuth(): AuthAction {
   return { type: AUTH_ACTIONS.LOADING, payload: null };

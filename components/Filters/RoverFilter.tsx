@@ -1,11 +1,8 @@
 import { useShow } from "@/hook";
-import colors from "@/styles/colors";
-
 import { Rover } from "@/utils/types/models/PhotoModel";
 
 import { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-import { styled } from "styled-components";
 import { Container } from "./styles";
 
 const rover: Rover[] = ["curiosity", "opportunity", "spirit"];
@@ -35,17 +32,18 @@ function RoverFilter({ onQuery, setRover }: Props) {
       {state && (
         <div className="options">
           {rover.map((c, i) => (
-            // eslint-disable-next-line react/jsx-key
-            <button
-              disabled={current === i}
-              className={current === i ? "active" : ""}
-              onClick={() => {
-                setCurrent(i);
-                _onQuery(c);
-              }}
-            >
-              {c}
-            </button>
+            <>
+              <button
+                disabled={current === i}
+                className={current === i ? "active" : ""}
+                onClick={() => {
+                  setCurrent(i);
+                  _onQuery(c);
+                }}
+              >
+                {c}
+              </button>
+            </>
           ))}
         </div>
       )}
@@ -54,4 +52,3 @@ function RoverFilter({ onQuery, setRover }: Props) {
 }
 
 export default RoverFilter;
-

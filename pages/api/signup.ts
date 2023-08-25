@@ -1,7 +1,14 @@
-// Importa la conexión a la base de datos MySQL aquí
+/**
+ * Handles user registration through a POST request.
+ *
+ * @param {NextApiRequest} req - The Next.js API request object.
+ * @param {NextApiResponse} res - The Next.js API response object.
+ */
+
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../utils/database";
 import { LoginProps } from "@/actions/auth";
+import { isValidEmail, isValidPassword } from "@/utils/validate";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,15 +16,24 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      // Conecta a la base de datos
       const connection = await connectToDatabase();
-
-      // Extrae los datos del cuerpo de la solicitud
       const { email, password } = req.body;
 
       if (!email || !password) {
         return res.status(400).json({
           error: "Please provide a email or password.",
+        });
+      }
+
+      if (!isValidEmail(email)) {
+        return res.status(400).json({
+          error: "Please provide a valid email.",
+        });
+      }
+
+      if (!isValidPassword(password)) {
+        return res.status(400).json({
+          error: "The password must be at least 8 characters long.",
         });
       }
 
@@ -37,15 +53,12 @@ export default async function handler(
         [email, password]
       );
       await connection.end();
-      // Responde con una confirmación
-      res.status(200).json({ mensaje: "Usuario registrado con éxito" });
+      res.status(200).json({ mensaje: "User successfully registered" });
     } catch (error) {
-      // Maneja los errores, por ejemplo, si el usuario ya existe
       console.error(error);
-      res.status(500).json({ mensaje: "Error al registrar el usuario" });
+      res.status(500).json({ mensaje: "Error when registering the user" });
     }
   } else {
-    // Responde a otros métodos de solicitud con un error 405 (Método no permitido)
     res.status(405).end();
   }
 }

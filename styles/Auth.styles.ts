@@ -4,7 +4,7 @@ import colors from "./colors";
 export const LoginContainer = styled.main`
   position: relative;
   height: 100%;
-  background: #fff;
+  background: #${colors.hex.primary._500};
 
   display: grid;
   grid-template-columns: 1fr auto;
@@ -54,7 +54,6 @@ export const LoginContainer = styled.main`
     .img {
       object-fit: contain;
       object-position: center;
-      opacity: 0.5;
     }
   }
 
