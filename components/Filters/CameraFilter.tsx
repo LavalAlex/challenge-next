@@ -1,10 +1,9 @@
 import { useShow } from "@/hook";
-import { CameraName } from "@/utils/types/models/PhotoModel";
 import { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import { Container } from "./styles";
 
-const curiosity: CameraName[] = [
+const curiosity: string[] = [
   "CHEMCAM",
   "MAHLI",
   "MARDI",
@@ -12,6 +11,8 @@ const curiosity: CameraName[] = [
   "FHAZ",
   "RHAZ",
   "MAST",
+  "PANCAM",
+  "MINITES",
 ];
 
 export interface Props {

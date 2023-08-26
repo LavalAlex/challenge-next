@@ -7,14 +7,13 @@ interface LogoProps {
 
 function Logo({ theme }: LogoProps) {
   return (
-    <LogoContainer href="/" theme={theme}>
+    <LogoContainer href="https://www.4agiledev.com/" theme={theme}>
       <div className="logo">
         <Image
           className="img"
-          src={"https://www.4agiledev.com/favicon.ico"}
+          src={"https://www.4agiledev.com/logo1_4agile.svg"}
           alt={""}
-          width={40}
-          height={40}
+          fill
         />
       </div>
     </LogoContainer>

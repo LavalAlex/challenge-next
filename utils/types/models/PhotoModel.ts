@@ -26,24 +26,6 @@ interface IPhotoModel {
   rover: IRover;
 }
 
-export type CameraName =
-  | "FHAZ"
-  | "RHAZ"
-  | "MAST"
-  | "CHEMCAM"
-  | "MAHLI"
-  | "MARDI"
-  | "NAVCAM"
-  | "PANCAM"
-  | "MINITES";
-
-export type EarthDate =
-  | "2023-08-25"
-  | "2023-08-24"
-  | "2023-08-23"
-  | "2023-08-22"
-  | "2023-08-22";
-
 export interface PhotosQuery {
   earthDate?: string | null;
   camera?: string | null;

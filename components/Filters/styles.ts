@@ -207,6 +207,8 @@ export const Buttons = styled.div`
 `;
 
 export const Container = styled.div`
+  width: 4rem;
+
   .options {
     position: absolute;
     z-index: 9999;
@@ -219,6 +221,7 @@ export const Container = styled.div`
     flex-flow: column;
     gap: 0.5em;
     border-radius: 5px;
+    width: 7rem;
 
     button {
       width: 100%;

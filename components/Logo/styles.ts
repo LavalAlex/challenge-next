@@ -22,7 +22,6 @@ export const LogoContainer = styled(Link)<Props>`
   align-items: center;
   height: 100%;
   width: 10rem;
-  padding: 0 0 0 2rem;
 
   .name {
     font-size: 1em;
@@ -36,13 +35,9 @@ export const LogoContainer = styled(Link)<Props>`
   .logo {
     background: #${colors.hex.primary._500};
 
-    position: relative;
-    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     width: 100%;
-    height: 3.5rem;
 
     .img {
-      margin: 0.5em 3em 1em 2.75em;
       width: 2.5rem;
       height: 2.5rem;
     }

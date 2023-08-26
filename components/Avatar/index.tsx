@@ -1,7 +1,7 @@
 import { AvatarContainer, AvatarPlaceholderContainer } from "./styles";
 
 export interface AvatarProps {
-  data: { email: string; firstName: string; lastName: string };
+  data: { email: string };
   onClick?: () => any;
 }
 function Avatar({ data, onClick }: AvatarProps) {
